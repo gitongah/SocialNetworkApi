@@ -1,14 +1,9 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 require('mongoose-type-email');
 
 const userSchema = new Schema(
   {
-    userId:{
-      type:Schema.Types.ObjectId,
-      default:() => new Types.ObjectId(),
-    },
-
     userName:{
       type: String,
       required: true,
@@ -17,7 +12,7 @@ const userSchema = new Schema(
       unique: true
     },
     email:{
-      type:mongoose.SchemaTypes.Email, 
+      type:String,
       required:true,
       unique:true,
     },
@@ -27,10 +22,12 @@ const userSchema = new Schema(
         ref:'Thoughts'
       },
     ],
-    friends:{
+    friends:[
+      {
       type:Schema.Types.ObjectId,
       ref:'User',
     },
+  ],  
   },
       {
       toJSON:{

@@ -1,11 +1,11 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const thoughtsSchema = new Schema(
   {
-    thoughtId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
+    // thoughtId: {
+    //   type: Schema.Types.ObjectId,
+    //   default: () => new Types.ObjectId(),
+    // },
     thoughtText:{
       type: String,
       required:true,
@@ -18,7 +18,7 @@ const thoughtsSchema = new Schema(
     },
     userName:
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true
       },
@@ -41,3 +41,5 @@ const thoughtsSchema = new Schema(
 const Thought = model('thought', thoughtsSchema);
 
 module.exports = Thought;
+
+//664be82ab87e00313cb7c31
