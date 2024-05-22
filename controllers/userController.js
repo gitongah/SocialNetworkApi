@@ -6,7 +6,10 @@ module.exports = {
   getUser(req, res){
     User.find()
       .then((user)=> res.json(user))
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        res.status(500).json(err)
+        console.log(err)
+      })
   },
   // getting a single user by the id
   getSingleUser(req, res){
@@ -30,7 +33,7 @@ module.exports = {
     });
   },
   //update a user
-  updateUser(req, res){
+  async updateUser(req, res){
     User.findOneAndUpdate(
       {_id: req.params.userId },
       {$set: req.body },
@@ -42,6 +45,38 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
+  // //add friend to user
+    addFriend(req, res){
+     User.findOneAndUpdate(
+      {_id: req.params.userId },
+      {$push: {friends:req.params.friendId} },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+      !user ? res.status(404).json({ message: 'No User with that ID' })
+      :res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+    },
+
+    //delete friend
+    removeFriend(req, res){
+     User.findOneAndUpdate(
+      {_id: req.params.userId },
+      {$pull: {friends:req.params.friendId} },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+      !user ? res.status(404).json({ message: 'No User with that ID' })
+      :res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+    },
+
+
+  
+
   // delete user by ID
 
   deleteUser(req, res){
