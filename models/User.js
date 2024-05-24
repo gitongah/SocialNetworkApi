@@ -7,12 +7,10 @@ const userSchema = new Schema(
     userName:{
       type: String,
       required: true,
-      maxlength:50,
-      minlength: 4,
-      unique: true
+      unique: true,
     },
     email:{
-      type:Schema.Types.Email,
+      type: String,
       required:true,
       unique:true,
     },
